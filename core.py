@@ -18,3 +18,6 @@ def shuffle_cube(cube):
   '''
   Embaralha o cubo tracando as faces
   '''
+
+c = new_cube_clean()
+print c
