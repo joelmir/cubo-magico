@@ -20,4 +20,5 @@ def shuffle_cube(cube):
   '''
 
 c = new_cube_clean()
+c.rotation('botton'  ,False)
 print c
