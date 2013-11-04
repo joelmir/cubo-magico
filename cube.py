@@ -5,34 +5,71 @@ class Cube(object):
     Monta o cubo com 6 faces montadas
     '''
 
-    def rotation(self,key ,clockwise=True):
+    def rotation_line(self,key):
         '''
-        Rotaciona linhas
+        Rotaciona as faces de acordo com as configurações:
         '''
-        lines = {'top':(0 ,3 ,self.default_face.top.sef_rotation) ,'botton' :(5,8 ,self.default_face.botton.sef_rotation)}
-
-        if key in lines:
-            positions = lines[key]
-            if clockwise:
-                self.default_face.elements[positions[0] : positions[1]], \
-                    self.default_face.right.elements[positions[0] :positions[1]], \
-                    self.default_face.right.right.elements[positions[0] :positions[1]], \
-                    self.default_face.right.right.right.elements[positions[0] :positions[1]] = \
-                    self.default_face.right.elements[positions[0] :positions[1]], \
-                    self.default_face.right.right.elements[positions[0] :positions[1]], \
-                    self.default_face.right.right.right.elements[positions[0] :positions[1]], \
-                    self.default_face.elements[positions[0] :positions[1]]
-            else:
-                self.default_face.elements[positions[0] : positions[1]], \
-                    self.default_face.left.elements[positions[0] : positions[1]], \
-                    self.default_face.left.left.elements[positions[0] : positions[1]], \
-                    self.default_face.left.left.left.elements[positions[0] : positions[1]] = \
-                    self.default_face.left.elements[positions[0] : positions[1]], \
-                    self.default_face.left.left.elements[positions[0] : positions[1]], \
-                    self.default_face.left.left.left.elements[positions[0] : positions[1]], \
-                    self.default_face.elements[positions[0] : positions[1]] 
-
-            positions[2](clockwise)
+        configurations = {  'top_clockwise': \
+                                {'positions': (0, 1, 2), \
+                                    'face1':self.default_face, \
+                                    'face2':self.default_face.right, \
+                                    'face3':self.default_face.right.right, \
+                                    'face4':self.default_face.right.right.right, \
+                                    'affected_face':self.default_face.top.sef_rotation, \
+                                    'clockwise':True}, \
+                            'top_anti_clockwise':\
+                                {'positions': (0, 1, 2), \
+                                    'face1':self.default_face.left, \
+                                    'face2':self.default_face.left.left, \
+                                    'face3':self.default_face.left.left.left, \
+                                    'face4':self.default_face.left.left.left.left, \
+                                    'affected_face':self.default_face.top.sef_rotation, \
+                                    'clockwise':False},\
+                            'botton_clockwise': \
+                                {'positions': (5,6,7), \
+                                    'face1':self.default_face, \
+                                    'face2':self.default_face.right, \
+                                    'face3':self.default_face.right.right, \
+                                    'face4':self.default_face.right.right.right, \
+                                    'affected_face':self.default_face.botton.sef_rotation, \
+                                    'clockwise':True}, \
+                            'botton_anti_clockwise':\
+                                {'positions': (5,6,7), \
+                                    'face1':self.default_face.left, \
+                                    'face2':self.default_face.left.left, \
+                                    'face3':self.default_face.left.left.left, \
+                                    'face4':self.default_face.left.left.left.left, \
+                                    'affected_face':self.default_face.botton.sef_rotation, \
+                                    'clockwise':False},\
+                            'left_clockwise': \
+                                {'positions': (0,3,5), \
+                                    'face1':self.default_face, \
+                                    'face2':self.default_face.top, \
+                                    'face3':self.default_face.top.top, \
+                                    'face4':self.default_face.top.top.top, \
+                                    'affected_face':self.default_face.left.sef_rotation, \
+                                    'clockwise':True}, \
+                            'left_anti_clockwise':\
+                                {'positions': (0,3,5), \
+                                    'face1':self.default_face, \
+                                    'face2':self.default_face.botton, \
+                                    'face3':self.default_face.botton.botton, \
+                                    'face4':self.default_face.botton.botton.botton, \
+                                    'affected_face':self.default_face.left.sef_rotation, \
+                                    'clockwise':False}}
+                
+        if key in configurations:
+            config = configurations[key]
+            for idx in config['positions']:
+                config['face1'].elements[idx], \
+                    config['face2'].elements[idx], \
+                    config['face3'].elements[idx], \
+                    config['face4'].elements[idx] = \
+                    config['face2'].elements[idx], \
+                    config['face3'].elements[idx], \
+                    config['face4'].elements[idx], \
+                    config['face1'].elements[idx]
+            config['affected_face'](config['clockwise'])
         else:
             print 'Linha {0} não é uma linha valida :/ '.format(key)
 
@@ -64,8 +101,8 @@ class Cube(object):
         #White
         self.face_white.left = self.face_orange
         self.face_white.right = self.face_blue
-        self.face_white.top = self.face_green
-        self.face_white.botton = self.face_yellow
+        self.face_white.top = self.face_yellow
+        self.face_white.botton = self.face_green
 
         #Blue
         self.face_blue.left = self.face_white
@@ -80,8 +117,8 @@ class Cube(object):
         self.face_green.botton = self.face_red
 
         #Yellow
-        self.face_yellow.left = self.face_blue
-        self.face_yellow.right = self.face_orange
+        self.face_yellow.left = self.face_orange
+        self.face_yellow.right = self.face_blue
         self.face_yellow.top = self.face_red
         self.face_yellow.botton = self.face_white
 

@@ -20,5 +20,17 @@ def shuffle_cube(cube):
   '''
 
 c = new_cube_clean()
-c.rotation('botton'  ,False)
+c.rotation_line('left_clockwise')
 print c
+c.rotation_line('left_anti_clockwise')
+print c
+c.rotation_line('botton_clockwise')
+print c
+c.rotation_line('botton_anti_clockwise')
+print c
+c.rotation_line('top_clockwise')
+print c
+c.rotation_line('top_anti_clockwise')
+print c
+
+
