@@ -19,25 +19,16 @@ def shuffle_cube(cube):
   Embaralha o cubo tracando as faces
   '''
   options = ['top', 'bottom', 'right' ,'left', 'rotate_clockwise', 'rotate_anti_clockwise'] 
-  c.command('top')
+  cube.command('top')
 
-def first_nivel():
+  
+
+#def first_nivel():
 
 
 c = new_cube_clean()  
-
-c.default_face.rotate()
-c.translate_right()
-c.default_face.rotate()
-#print c
-c.translate_right()
-c.default_face.rotate()
-#print c
-c.translate_right()
-c.default_face.rotate()
-#print c
-c.translate_left()
-c.default_face.rotate()
-#print c
-c.default_face.rotate()
 print c
+for r in range(4):
+  c.command('right')
+  print c
+

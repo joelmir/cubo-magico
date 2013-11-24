@@ -4,14 +4,8 @@ class Cube(object):
     '''
     Monta o cubo com 6 faces montadas
     '''
-    def command(str_cmd):
-        cmd = {'top':translate_top, \
-         'bottom':translate_bottom,\
-         'right':translate_right,\
-         'left':translate_left,\
-         'rotate_clockwise':rotate_clockwise,\
-         'rotate_anti_clockwise':rotate_anti_clockwise}
-        cmd[str_cmd]()
+    def command(self, str_cmd):
+        self.cmd[str_cmd]()
 
     def rotate_clockwise(self):
         self.default_face.rotate()
@@ -20,58 +14,94 @@ class Cube(object):
         self.default_face.rotate(False)
 
     def translate_top(self):
-        self.default_face.left.right = self.default_face.left.top
-        self.default_face.left.top = self.default_face.left.left
-        self.default_face.left.left = self.default_face.left.bottom
-        self.default_face.left.bottom = self.default_face.left.right
+        self.default_face.left.right ,\
+        self.default_face.left.top,\
+        self.default_face.left.left,\
+        self.default_face.left.bottom = \
+        self.default_face.left.top,\
+        self.default_face.left.left,\
+        self.default_face.left.bottom,\
+        self.default_face.left.right
         self.default_face.left.rotate(True, False)
 
-        self.default_face.left.left.left, self.default_face.left.left.right =\
-        self.default_face.left.left.right, self.default_face.left.left.left
-
-        self.default_face.left.left.top, self.default_face.left.left.bottom =\
-        self.default_face.left.left.bottom, self.default_face.left.left.top
-
-
-        self.default_face.right.left = self.default_face.right.top
-        self.default_face.right.top = self.default_face.right.right
-        self.default_face.right.right = self.default_face.right.bottom
-        self.default_face.right.bottom = self.default_face.right.left
+        self.default_face.right.left,\
+        self.default_face.right.top,\
+        self.default_face.right.right,\
+        self.default_face.right.bottom =\
+        self.default_face.right.top,\
+        self.default_face.right.right,\
+        self.default_face.right.bottom,\
+        self.default_face.right.left
         self.default_face.right.rotate(False, False)
 
         self.default_face = self.default_face.top
 
     def translate_bottom(self):
-
-        self.default_face.right.right = self.default_face.right.top
-        self.default_face.right.top = self.default_face.right.left
-        self.default_face.right.left = self.default_face.right.bottom
-        self.default_face.right.bottom = self.default_face.right.right
+        self.default_face.right.left,\
+        self.default_face.right.top,\
+        self.default_face.right.right,\
+        self.default_face.right.bottom =\
+        self.default_face.right.top,\
+        self.default_face.right.right,\
+        self.default_face.right.bottom,\
+        self.default_face.right.left
         self.default_face.right.rotate(False, False)
 
-
-        self.default_face.left.left = self.default_face.left.top
-        self.default_face.left.top = self.default_face.left.right
-        self.default_face.left.right = self.default_face.left.bottom
-        self.default_face.left.bottom = self.default_face.left.left
+        self.default_face.left.right ,\
+        self.default_face.left.top,\
+        self.default_face.left.left,\
+        self.default_face.left.bottom = \
+        self.default_face.left.top,\
+        self.default_face.left.left,\
+        self.default_face.left.bottom,\
+        self.default_face.left.right
         self.default_face.left.rotate(True, False)
 
         self.default_face = self.default_face.bottom
 
     def translate_right(self):
 
-        self.default_face.top.right = self.default_face.top.top
-        self.default_face.top.top = self.default_face.top.left
-        self.default_face.top.left = self.default_face.top.bottom
-        self.default_face.top.bottom = self.default_face.top.right
-        self.default_face.top.rotate(False, False)
+        self.default_face.top.right ,\
+        self.default_face.top.top,\
+        self.default_face.top.left,\
+        self.default_face.top.bottom = \
+        self.default_face.top.top,\
+        self.default_face.top.left,\
+        self.default_face.top.bottom,\
+        self.default_face.top.right
+        self.default_face.top.rotate(True, False)
 
+        self.default_face.bottom.left ,\
+        self.default_face.bottom.top,\
+        self.default_face.bottom.right,\
+        self.default_face.bottom.bottom = \
+        self.default_face.bottom.top,\
+        self.default_face.bottom.left,\
+        self.default_face.bottom.bottom,\
+        self.default_face.bottom.right
+        self.default_face.bottom.rotate(False, False)
 
-        self.default_face.bottom.left = self.default_face.bottom.top
-        self.default_face.bottom.top = self.default_face.bottom.right
-        self.default_face.bottom.right = self.default_face.bottom.bottom
-        self.default_face.bottom.bottom = self.default_face.bottom.left
-        self.default_face.bottom.rotate(True, False)
+        self.default_face.top.top.top,\
+        self.default_face.top.top.bottom,\
+        self.default_face.top.top.left,\
+        self.default_face.top.top.right = \
+        self.default_face.top.top.bottom,\
+        self.default_face.top.top.top,\
+        self.default_face.top.top.right,\
+        self.default_face.top.top.left
+        #self.default_face.top.top.rotate(True, False)
+        #self.default_face.top.top.rotate(True, False)
+
+        self.default_face.left.top,\
+        self.default_face.left.bottom,\
+        self.default_face.left.left,\
+        self.default_face.left.right = \
+        self.default_face.left.bottom,\
+        self.default_face.left.top,\
+        self.default_face.left.right,\
+        self.default_face.left.left
+        #self.default_face.left.rotate(True, False)
+        #self.default_face.left.rotate(True, False)
 
         self.default_face = self.default_face.right
 
@@ -118,8 +148,8 @@ class Cube(object):
         self.face_blue.bottom = self.face_yellow
 
         #White
-        self.face_white.left = self.face_orange
-        self.face_white.right = self.face_blue
+        self.face_white.left = self.face_blue
+        self.face_white.right = self.face_orange
         self.face_white.top = self.face_yellow
         self.face_white.bottom = self.face_green
 
@@ -144,6 +174,13 @@ class Cube(object):
         #define a face padrão
         self.default_face = self.face_red
 
+        self.cmd = {'top':self.translate_top,
+         'bottom':self.translate_bottom,\
+         'right':self.translate_right,\
+         'left':self.translate_left,\
+         'rotate_clockwise':self.rotate_clockwise,\
+         'rotate_anti_clockwise':self.rotate_anti_clockwise}
+
     def __str__(self):
         '''
         Exibe o cubo de forma 'Amigavel' :D
@@ -156,17 +193,17 @@ class Cube(object):
         res += '{0[0]}\t{0[1]}\t{0[2]}\t'.format(self.default_face.left.linha1())
         res += '{0[0]}\t{0[1]}\t{0[2]}\t '.format(self.default_face.linha1())
         res += '{0[0]}\t{0[1]}\t{0[2]}\t'.format(self.default_face.right.linha1())
-        res += '{0[0]}\t{0[1]}\t{0[2]}\n'.format(self.default_face.right.right.linha1())
+        res += '{0[0]}\t{0[1]}\t{0[2]}\n'.format(self.default_face.bottom.bottom.linha1())
 
         res += '{0[0]}\t{0[1]}\t{0[2]}\t'.format(self.default_face.left.linha2())
         res += '{0[0]}\t{0[1]}\t{0[2]}\t '.format(self.default_face.linha2())
         res += '{0[0]}\t{0[1]}\t{0[2]}\t'.format(self.default_face.right.linha2())
-        res += '{0[0]}\t{0[1]}\t{0[2]}\n'.format(self.default_face.right.right.linha2())
+        res += '{0[0]}\t{0[1]}\t{0[2]}\n'.format(self.default_face.bottom.bottom.linha2())
         
         res += '{0[0]}\t{0[1]}\t{0[2]}\t'.format(self.default_face.left.linha3())
         res += '{0[0]}\t{0[1]}\t{0[2]}\t '.format(self.default_face.linha3())
         res += '{0[0]}\t{0[1]}\t{0[2]}\t'.format(self.default_face.right.linha3())
-        res += '{0[0]}\t{0[1]}\t{0[2]}\n'.format(self.default_face.right.right.linha3())
+        res += '{0[0]}\t{0[1]}\t{0[2]}\n'.format(self.default_face.bottom.bottom.linha3())
         #face inferior
         res += '\t\t\t{0[0]}\t{0[1]}\t{0[2]}\n'.format(self.default_face.bottom.linha1())
         res += '\t\t\t{0[0]}\t{0[1]}\t{0[2]}\n'.format(self.default_face.bottom.linha2())
