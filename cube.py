@@ -4,6 +4,9 @@ class Cube(object):
     '''
     Monta o cubo com 6 faces montadas
     '''
+    def command(self, cmd):
+        self.cmd[cmd]()
+
     def __init__(self):
         '''
         Inicializa o Cubo com as face Montadas
@@ -34,6 +37,27 @@ class Cube(object):
         self.matriz.append(['b','b','b'])
         self.matriz.append(['b','b','b'])
         self.matriz.append(['b','b','b'])
+
+        #define os comandos
+        self.cmd = {'right_up':self.right_up,
+                     'right_down':self.right_down,\
+                     'left_up':self.left_up,\
+                     'left_down':self.left_down,\
+                     'top_right':self.top_right,\
+                     'top_left':self.top_left,\
+                     'bottom_right':self.bottom_right,\
+                     'bottom_left':self.bottom_left,\
+                     'front_clockwise':self.front_clockwise,\
+                     'front_anti_clockwise':self.front_anti_clockwise,\
+                     'behind_clockwise':self.behind_clockwise,\
+                     'behind_anti_clockwise':self.behind_anti_clockwise}
+        #registra os lados
+        self.base_color = self.matriz[4][4]
+        self.left_color = self.matriz[4][1]
+        self.right_color = self.matriz[4][7]
+        self.top_color = self.matriz[1][1]
+        self.bottom_color = self.matriz[7][1]
+        self.behind_color = self.matriz[4][10]
 
     def __str__(self):
         ret = ''
