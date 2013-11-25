@@ -25,7 +25,9 @@ def shuffle_cube(cube):
         'bottom_right', 'bottom_left', \
         'front_clockwise', 'front_anti_clockwise', \
         'behind_clockwise', 'behind_anti_clockwise' ]
-    cube.command(options[0])
+    random.shuffle(options)
+    for cmd in options:
+        cube.command(cmd)
 
 def evaluation_step_one(cube):
     '''
@@ -134,24 +136,30 @@ def evaluation_step_five(cube):
         print 'Step 5 OK!'
     return rate
 
-def backtraking(cube):
+def backtraking(cube, level = 7):
     rate = evaluation_step_one(c)
-    print rate
     if rate != 4:
-        options = [ 'right_up', 'right_down', \
-            'left_up', 'left_down', \
-            'top_right', 'top_left', \
-            'bottom_right', 'bottom_left', \
-            'front_clockwise', 'front_anti_clockwise', \
-            'behind_clockwise', 'behind_anti_clockwise' ]
-        random.shuffle(options)
-        cube.command(options[0])
-        backtraking(cube)
+        if level:
+            level -= 1
+            for cmd in [ 'right_up', 'right_down', \
+                        'left_up', 'left_down', \
+                        'top_right', 'top_left', \
+                        'bottom_right', 'bottom_left', \
+                        'front_clockwise', 'front_anti_clockwise', \
+                        'behind_clockwise', 'behind_anti_clockwise' ]:
+                cube.command(cmd)
+                if backtraking(cube, level):
+                    return True            
+    else:
+        return True
 
 #def first_nivel():
 c = new_cube_clean()  
 print c
+shuffle_cube(c)
+print c
 print backtraking(c)
+print c
 print evaluation_step_one(c)
 print evaluation_step_two(c)
 print evaluation_step_three(c)
