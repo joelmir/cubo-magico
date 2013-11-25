@@ -28,7 +28,7 @@ def shuffle_cube(cube):
 
 def evaluation_step_one(cube):
     '''
-    Avalia o X ( primeira faze )
+    Avalia o X ( primeira fase )
     '''
     rate = 0
     if cube.matriz[3][4] == cube.base_color and cube.matriz[2][1] == cube.top_color:
@@ -45,7 +45,7 @@ def evaluation_step_one(cube):
 
 def evaluation_step_two(cube):
     '''
-    Avalia os cantos ( segunda faze )
+    Avalia os cantos ( segunda fase )
     '''
     rate = 0
     if cube.matriz[3][3] == cube.base_color and \
@@ -71,7 +71,7 @@ def evaluation_step_two(cube):
 
 def evaluation_step_three(cube):
     '''
-    Avalia o meio do cubo ( terceira faze )
+    Avalia o meio do cubo ( terceira fase )
     '''
     rate = 0
     if cube.matriz[3][1] == cube.left_color and \
@@ -92,7 +92,7 @@ def evaluation_step_three(cube):
 
 def evaluation_step_four(cube):
     '''
-    Avalia a cruz superior ( quarta faze )
+    Avalia a cruz superior ( quarta fase )
     '''
     rate = 0
     if cube.matriz[3][10] == cube.behind_color and cube.matriz[0][1] == cube.top_color:
@@ -109,7 +109,7 @@ def evaluation_step_four(cube):
 
 def evaluation_step_five(cube):
     '''
-    Avalia os cantos superior ( quinta faze )
+    Avalia os cantos superior ( quinta fase )
     '''
     rate = 0
     if cube.matriz[3][11] == cube.behind_color and \
