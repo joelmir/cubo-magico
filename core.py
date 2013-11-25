@@ -7,7 +7,25 @@ import random
 Trabalho de complexidade de algoritmos
 Resolver o cubo mágico 
 '''
+options =  ['right_up', 'right_down', \
+            'left_up', 'left_down', \
+            'top_right', 'top_left', \
+            'bottom_right', 'bottom_left', \
+            'front_clockwise', 'front_anti_clockwise', \
+            'behind_clockwise', 'behind_anti_clockwise' ]
 
+reverse = {'right_up':'right_down',\
+            'right_down':'right_up',\
+            'left_up':'left_down',\
+            'left_down':'left_up',\
+            'top_right':'top_left', \
+            'top_left':'top_right',\
+            'bottom_right':'bottom_left',\
+            'bottom_left':'bottom_right',\
+            'front_clockwise':'front_anti_clockwise',\
+            'front_anti_clockwise':'front_clockwise',\
+            'behind_clockwise':'behind_anti_clockwise',\
+            'behind_anti_clockwise':'behind_clockwise'}
 
 def new_cube_clean():
     '''
@@ -19,12 +37,6 @@ def shuffle_cube(cube):
     '''
     Embaralha o cubo tracando as faces
     '''
-    options = [ 'right_up', 'right_down', \
-        'left_up', 'left_down', \
-        'top_right', 'top_left', \
-        'bottom_right', 'bottom_left', \
-        'front_clockwise', 'front_anti_clockwise', \
-        'behind_clockwise', 'behind_anti_clockwise' ]
     random.shuffle(options)
     for cmd in options:
         cube.command(cmd)
@@ -136,32 +148,42 @@ def evaluation_step_five(cube):
         print 'Step 5 OK!'
     return rate
 
-def backtraking(cube, level = 7):
-    rate = evaluation_step_one(c)
-    if rate != 4:
-        if level:
-            level -= 1
-            for cmd in [ 'right_up', 'right_down', \
-                        'left_up', 'left_down', \
-                        'top_right', 'top_left', \
-                        'bottom_right', 'bottom_left', \
-                        'front_clockwise', 'front_anti_clockwise', \
-                        'behind_clockwise', 'behind_anti_clockwise' ]:
-                cube.command(cmd)
-                if backtraking(cube, level):
-                    return True            
-    else:
+def backtraking_one(cube,rate =0, level = 0):#,rate=0, level = 0, live = 0):
+    local_rate = evaluation_step_one(cube)
+    #print 'rate:', rate
+    if local_rate == 4:
         return True
+    #if live > 5:
+    #    return False
+    if local_rate > rate:
+        level = 0
+        rate = local_rate
+    #elif local_rate <= rate and live == 0 :
+    #    live = 1
+    #if live:
+    #    live += 1
+
+    level += 1
+    if level < 6:
+        random.shuffle(options)
+        for cmd in options:
+            cube.command(cmd)
+            if backtraking_one(cube,rate, level):#,rate, level, live):
+                return True 
+            cube.command(reverse[cmd])
+    return False
 
 #def first_nivel():
 c = new_cube_clean()  
 print c
 shuffle_cube(c)
 print c
-print backtraking(c)
+#c.command('right_up')
+#print c
+print backtraking_one(c)
 print c
-print evaluation_step_one(c)
-print evaluation_step_two(c)
-print evaluation_step_three(c)
-print evaluation_step_four(c)
-print evaluation_step_five(c)
+#print evaluation_step_one(c)
+#print evaluation_step_two(c)
+#print evaluation_step_three(c)
+#print evaluation_step_four(c)
+#print evaluation_step_five(c)

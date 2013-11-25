@@ -81,8 +81,8 @@ class Cube(object):
         self.matriz[3][9],self.matriz[4][9],self.matriz[5][9] = \
         self.matriz[3][5],self.matriz[4][5],self.matriz[5][5],\
         self.matriz[6][2],self.matriz[7][2],self.matriz[8][2],\
-        self.matriz[4][9],self.matriz[5][9],self.matriz[3][9],\
-        self.matriz[0][2],self.matriz[1][2],self.matriz[2][2]
+        self.matriz[5][9],self.matriz[4][9],self.matriz[3][9],\
+        self.matriz[2][2],self.matriz[1][2],self.matriz[0][2]
 
         self.matriz[3][6],self.matriz[3][7],self.matriz[3][8],\
         self.matriz[4][6],self.matriz[4][8],\
@@ -101,8 +101,8 @@ class Cube(object):
         self.matriz[0][2],self.matriz[1][2],self.matriz[2][2] = \
         self.matriz[0][2],self.matriz[1][2],self.matriz[2][2],\
         self.matriz[3][5],self.matriz[4][5],self.matriz[5][5],\
-        self.matriz[6][2],self.matriz[7][2],self.matriz[8][2],\
-        self.matriz[3][9],self.matriz[4][9],self.matriz[5][9]
+        self.matriz[7][2],self.matriz[6][2],self.matriz[8][2],\
+        self.matriz[5][9],self.matriz[4][9],self.matriz[3][9]
 
         self.matriz[5][6],self.matriz[4][6],self.matriz[3][6],\
         self.matriz[5][7],self.matriz[3][7],\
@@ -115,7 +115,7 @@ class Cube(object):
         '''
         Gira coluna da esquerda para cima
         '''
-        self.matriz[0][0],self.matriz[1][0],self.matriz[2][0],\
+        self.matriz[2][0],self.matriz[1][0],self.matriz[0][0],\
         self.matriz[3][3],self.matriz[4][3],self.matriz[5][3],\
         self.matriz[6][0],self.matriz[7][0],self.matriz[8][0],\
         self.matriz[3][11],self.matriz[4][11],self.matriz[5][11] = \
@@ -142,7 +142,7 @@ class Cube(object):
         self.matriz[0][0],self.matriz[1][0],self.matriz[2][0],\
         self.matriz[3][3],self.matriz[4][3],self.matriz[5][3],\
         self.matriz[6][0],self.matriz[7][0],self.matriz[8][0],\
-        self.matriz[3][11],self.matriz[4][11],self.matriz[5][11]
+        self.matriz[5][11],self.matriz[4][11],self.matriz[3][11]
 
         self.matriz[3][0],self.matriz[3][1],self.matriz[3][2],\
         self.matriz[4][0],self.matriz[4][2],\
@@ -157,19 +157,6 @@ class Cube(object):
         '''
         self.matriz[3][:3],self.matriz[3][-9:] = self.matriz[3][9:],self.matriz[3][:9]
 
-        self.matriz[0][0],self.matriz[0][1],self.matriz[0][2],\
-        self.matriz[1][0],self.matriz[1][2],\
-        self.matriz[2][0],self.matriz[2][1],self.matriz[2][2] = \
-        self.matriz[2][0],self.matriz[1][0],self.matriz[0][0],\
-        self.matriz[2][1],self.matriz[0][1],\
-        self.matriz[2][2],self.matriz[1][2],self.matriz[0][2]
-
-    def top_left(self):
-        '''
-        Gira linha superior para esquerda
-        '''
-        self.matriz[3][9:],self.matriz[3][:9] = self.matriz[3][:3],self.matriz[3][-9:]
-
         self.matriz[2][0],self.matriz[1][0],self.matriz[0][0],\
         self.matriz[2][1],self.matriz[0][1],\
         self.matriz[2][2],self.matriz[1][2],self.matriz[0][2] =\
@@ -177,7 +164,33 @@ class Cube(object):
         self.matriz[1][0],self.matriz[1][2],\
         self.matriz[2][0],self.matriz[2][1],self.matriz[2][2]
 
+    def top_left(self):
+        '''
+        Gira linha superior para esquerda
+        '''   
+        self.matriz[3][9:],self.matriz[3][:9] = self.matriz[3][:3],self.matriz[3][-9:]
+        self.matriz[0][0],self.matriz[0][1],self.matriz[0][2],\
+        self.matriz[1][0],self.matriz[1][2],\
+        self.matriz[2][0],self.matriz[2][1],self.matriz[2][2] = \
+        self.matriz[2][0],self.matriz[1][0],self.matriz[0][0],\
+        self.matriz[2][1],self.matriz[0][1],\
+        self.matriz[2][2],self.matriz[1][2],self.matriz[0][2]
+
     def bottom_right(self):
+        '''
+        Gira linha inferior para esquerda
+        '''
+        self.matriz[5][:3],self.matriz[5][-9:] = self.matriz[5][9:],self.matriz[5][:9]
+
+        self.matriz[6][0],self.matriz[6][1],self.matriz[6][2],\
+        self.matriz[7][0],self.matriz[7][2],\
+        self.matriz[8][0],self.matriz[8][1],self.matriz[8][2] = \
+        self.matriz[8][0],self.matriz[7][0],self.matriz[6][0],\
+        self.matriz[8][1],self.matriz[6][1],\
+        self.matriz[8][2],self.matriz[7][2],self.matriz[6][2]
+        
+
+    def bottom_left(self):
         '''
         Gira linha inferior para direita
         '''
@@ -190,19 +203,6 @@ class Cube(object):
         self.matriz[7][0],self.matriz[7][2],\
         self.matriz[8][0],self.matriz[8][1],self.matriz[8][2]
 
-    def bottom_left(self):
-        '''
-        Gira linha inferior para esquerda
-        '''
-        self.matriz[5][:3],self.matriz[5][-9:] = self.matriz[5][9:],self.matriz[5][:9]
-
-        self.matriz[6][0],self.matriz[6][1],self.matriz[6][2],\
-        self.matriz[7][0],self.matriz[7][2],\
-        self.matriz[8][0],self.matriz[8][1],self.matriz[8][2] = \
-        self.matriz[8][0],self.matriz[7][0],self.matriz[6][0],\
-        self.matriz[8][1],self.matriz[6][1],\
-        self.matriz[8][2],self.matriz[7][2],self.matriz[6][2]
-
     def front_clockwise(self):
         '''
         Gira a face da frente sentido horário
@@ -211,9 +211,9 @@ class Cube(object):
         self.matriz[3][6],self.matriz[4][6],self.matriz[5][6],\
         self.matriz[6][0],self.matriz[6][1],self.matriz[6][2],\
         self.matriz[3][2],self.matriz[4][2],self.matriz[5][2] = \
-        self.matriz[3][2],self.matriz[4][2],self.matriz[5][2],\
+        self.matriz[5][2],self.matriz[4][2],self.matriz[3][2],\
         self.matriz[2][0],self.matriz[2][1],self.matriz[2][2],\
-        self.matriz[3][6],self.matriz[4][6],self.matriz[5][6],\
+        self.matriz[5][6],self.matriz[4][6],self.matriz[3][6],\
         self.matriz[6][0],self.matriz[6][1],self.matriz[6][2]
 
         self.matriz[3][3],self.matriz[3][4],self.matriz[3][5],\
@@ -231,9 +231,9 @@ class Cube(object):
         self.matriz[2][0],self.matriz[2][1],self.matriz[2][2],\
         self.matriz[3][6],self.matriz[4][6],self.matriz[5][6],\
         self.matriz[6][0],self.matriz[6][1],self.matriz[6][2] = \
-        self.matriz[2][0],self.matriz[2][1],self.matriz[2][2],\
+        self.matriz[2][2],self.matriz[2][1],self.matriz[2][0],\
         self.matriz[3][6],self.matriz[4][6],self.matriz[5][6],\
-        self.matriz[6][0],self.matriz[6][1],self.matriz[6][2],\
+        self.matriz[6][2],self.matriz[6][1],self.matriz[6][0],\
         self.matriz[3][2],self.matriz[4][2],self.matriz[5][2]
 
         self.matriz[5][3],self.matriz[4][3],self.matriz[3][3],\
@@ -251,9 +251,9 @@ class Cube(object):
         self.matriz[3][8],self.matriz[4][8],self.matriz[5][8],\
         self.matriz[8][0],self.matriz[8][1],self.matriz[8][2],\
         self.matriz[3][0],self.matriz[4][0],self.matriz[5][0] = \
-        self.matriz[3][0],self.matriz[4][0],self.matriz[5][0],\
+        self.matriz[5][0],self.matriz[4][0],self.matriz[3][0],\
         self.matriz[0][0],self.matriz[0][1],self.matriz[0][2],\
-        self.matriz[3][8],self.matriz[4][8],self.matriz[5][8],\
+        self.matriz[5][8],self.matriz[4][8],self.matriz[3][8],\
         self.matriz[8][0],self.matriz[8][1],self.matriz[8][2]
         
         self.matriz[5][9],self.matriz[4][9],self.matriz[3][9],\
@@ -271,9 +271,9 @@ class Cube(object):
         self.matriz[0][0],self.matriz[0][1],self.matriz[0][2],\
         self.matriz[3][8],self.matriz[4][8],self.matriz[5][8],\
         self.matriz[8][0],self.matriz[8][1],self.matriz[8][2] =\
-        self.matriz[0][0],self.matriz[0][1],self.matriz[0][2],\
+        self.matriz[0][2],self.matriz[0][1],self.matriz[0][0],\
         self.matriz[3][8],self.matriz[4][8],self.matriz[5][8],\
-        self.matriz[8][0],self.matriz[8][1],self.matriz[8][2],\
+        self.matriz[8][2],self.matriz[8][1],self.matriz[8][0],\
         self.matriz[3][0],self.matriz[4][0],self.matriz[5][0]
         
         self.matriz[3][9],self.matriz[3][10],self.matriz[3][11],\
