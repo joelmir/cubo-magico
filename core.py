@@ -148,28 +148,33 @@ def evaluation_step_five(cube):
         print 'Step 5 OK!'
     return rate
 
-def backtraking_one(cube,rate =0, level = 0):#,rate=0, level = 0, live = 0):
+def backtraking_step_one(cube, level = 0, best_rate = 0):
+    #avalia o estado atual do cubo
     local_rate = evaluation_step_one(cube)
-    #print 'rate:', rate
+    #Resultado encontrado
     if local_rate == 4:
         return True
-    #if live > 5:
-    #    return False
-    if local_rate > rate:
+    #Melhor resultado zera os niveis de atuação
+    if local_rate > best_rate:
         level = 0
-        rate = local_rate
-    #elif local_rate <= rate and live == 0 :
-    #    live = 1
-    #if live:
-    #    live += 1
+        best_rate = local_rate
 
+    #Não melhorou a pontuação em 4 niveis Aborta
+    if level == 4 and local_rate < best_rate:
+        return False
+    #incrementa o nivel
     level += 1
-    if level < 6:
+    #Verifica se não atingiu o ultimo nivel (sétimo)
+    if level < 7:
+        #randomiza a sequencia de operações
         random.shuffle(options)
         for cmd in options:
+            #executa a alteração
             cube.command(cmd)
-            if backtraking_one(cube,rate, level):#,rate, level, live):
+            #chama o backtraking e avalia o resultado
+            if backtraking_step_one(cube, level, best_rate):#,rate, level, live):
                 return True 
+            #desfazo a alteração no cubo
             cube.command(reverse[cmd])
     return False
 
@@ -179,8 +184,7 @@ print c
 shuffle_cube(c)
 print c
 #c.command('right_up')
-#print c
-print backtraking_one(c)
+print backtraking_step_one(c)
 print c
 #print evaluation_step_one(c)
 #print evaluation_step_two(c)
