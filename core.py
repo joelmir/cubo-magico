@@ -7,8 +7,8 @@ import random
 Trabalho de complexidade de algoritmos
 Resolver o cubo mágico 
 '''
-options =  ['right_up', 'right_down', \
-            'left_up', 'left_down', \
+options =  ['right_up', 'left_up', \
+            'right_down', 'left_down', \
             'top_right', 'top_left', \
             'bottom_right', 'bottom_left', \
             'front_clockwise', 'front_anti_clockwise', \
@@ -40,6 +40,10 @@ def shuffle_cube(cube):
     random.shuffle(options)
     for cmd in options:
         cube.command(cmd)
+    #cube.command('right_down')
+    #cube.command('left_down')
+    #cube.command('front_clockwise')
+
 
 def evaluation_step_one(cube):
     '''
@@ -54,8 +58,6 @@ def evaluation_step_one(cube):
         rate += 1
     if cube.matriz[5][4] == cube.base_color and cube.matriz[6][1] == cube.bottom_color:
         rate += 1
-    if rate == 4:
-        print 'Step 1 OK!'
     return rate
 
 def evaluation_step_two(cube):
@@ -135,7 +137,6 @@ def evaluation_step_five(cube):
         cube.matriz[0][2] == cube.top_color and \
         cube.matriz[3][8] == cube.right_color:
         rate += 1
-
     if cube.matriz[5][11] == cube.behind_color and \
         cube.matriz[8][0] == cube.bottom_color and \
         cube.matriz[5][0] == cube.left_color:
@@ -148,70 +149,32 @@ def evaluation_step_five(cube):
         print 'Step 5 OK!'
     return rate
 
-def backtraking_step_one(cube, level = 0, best_rate = 0):
+def backtraking_step_one(cube, bread_crumb, level = 0, best_rate = 0 ):
     #avalia o estado atual do cubo
     local_rate = evaluation_step_one(cube)
     #Resultado encontrado
     if local_rate == 4:
+        print 'Step 1 OK!'
         return True
     #Melhor resultado zera os niveis de atuação
     if local_rate > best_rate:
         level = 0
         best_rate = local_rate
-
-    #Não melhorou a pontuação em 4 niveis Aborta
-    if level == 4 and local_rate < best_rate:
-        return False
     #incrementa o nivel
     level += 1
     #Verifica se não atingiu o ultimo nivel (sétimo)
-    if level < 7:
+    if level < 5:
         #randomiza a sequencia de operações
         random.shuffle(options)
         for cmd in options:
             #executa a alteração
             cube.command(cmd)
+            bread_crumb.append(cmd)
             #chama o backtraking e avalia o resultado
-            if backtraking_step_one(cube, level, best_rate):#,rate, level, live):
+            if backtraking_step_one(cube,bread_crumb , level, best_rate):#,rate, level, live):
                 return True 
             #desfazo a alteração no cubo
-            cube.command(reverse[cmd])
-    return False
-
-def backtraking_step_two(cube, level = 0, best_rate = 0):
-    #Avalia os passos anteriores
-    step_1 = evaluation_step_one(cube)
-    #Caso já está no 4 nivel sem melhorar aborta
-    if step_1 < 4 and level == 4:
-        return False
-
-    #avalia o estado atual do cubo
-    local_rate = evaluation_step_two(cube)
-    
-    #Resultado encontrado
-    if local_rate == 4 == step_1:
-        return True
-    #Melhor resultado zera os niveis de atuação
-    if local_rate > best_rate:
-        level = 0
-        best_rate = local_rate
-
-    #Não melhorou a pontuação em 4 niveis Aborta
-    if level == 4 and local_rate < best_rate:
-        return False
-    #incrementa o nivel
-    level += 1
-    #Verifica se não atingiu o ultimo nivel (sétimo)
-    if level < 7:
-        #randomiza a sequencia de operações
-        random.shuffle(options)
-        for cmd in options:
-            #executa a alteração
-            cube.command(cmd)
-            #chama o backtraking e avalia o resultado
-            if backtraking_step_two(cube, level, best_rate):#,rate, level, live):
-                return True 
-            #desfazo a alteração no cubo
+            bread_crumb.pop()
             cube.command(reverse[cmd])
     return False
 
@@ -221,10 +184,12 @@ print c
 shuffle_cube(c)
 print c
 #c.command('right_up')
-print backtraking_step_one(c)
-print c
-print backtraking_step_two(c)
-print c
+bread_crumb = []
+print backtraking_step_one(c,bread_crumb)
+print '{0} Movimentos '.format(len(bread_crumb))
+print bread_crumb
+#print backtraking_step_two(c)
+#print c
 
 #print evaluation_step_one(c)
 #print evaluation_step_two(c)
