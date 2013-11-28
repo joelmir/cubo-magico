@@ -74,6 +74,9 @@ class Cube(object):
     def right_up(self):
         '''
         Gira coluna da direita para cima
+
+        >>> Cube().right_up()
+        [['g', 'g', 'r'], ['g', 'g', 'r'], ['g', 'g', 'r'], ['y', 'y', 'y', 'r', 'r', 'b', 'w', 'w', 'w', 'g', 'o', 'o'], ['y', 'y', 'y', 'r', 'r', 'b', 'w', 'w', 'w', 'g', 'o', 'o'], ['y', 'y', 'y', 'r', 'r', 'b', 'w', 'w', 'w', 'g', 'o', 'o'], ['b', 'b', 'o'], ['b', 'b', 'o'], ['b', 'b', 'o']]
         '''
         self.matriz[0][2],self.matriz[1][2],self.matriz[2][2],\
         self.matriz[3][5],self.matriz[4][5],self.matriz[5][5],\
@@ -90,6 +93,7 @@ class Cube(object):
         self.matriz[5][6],self.matriz[4][6],self.matriz[3][6],\
         self.matriz[5][7],self.matriz[3][7],\
         self.matriz[5][8],self.matriz[4][8],self.matriz[3][8]
+        return self.matriz
 
     def right_down(self):
         '''

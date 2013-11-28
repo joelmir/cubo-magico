@@ -8,11 +8,12 @@ Trabalho de complexidade de algoritmos
 Resolver o cubo mágico 
 '''
 options =  ['right_up', 'left_up', \
-            'right_down', 'left_down', \
-            'top_right', 'top_left', \
-            'bottom_right', 'bottom_left', \
-            'front_clockwise', 'front_anti_clockwise', \
-            'behind_clockwise', 'behind_anti_clockwise' ]
+            'right_down', 'left_down']
+            # , \
+            # 'top_right', 'top_left', \
+            # 'bottom_right', 'bottom_left', \
+            # 'front_clockwise', 'front_anti_clockwise', \
+            # 'behind_clockwise', 'behind_anti_clockwise' ]
 
 reverse = {'right_up':'right_down',\
             'right_down':'right_up',\
@@ -36,12 +37,24 @@ def new_cube_clean():
 def shuffle_cube(cube):
     '''
     Embaralha o cubo tracando as faces
+
+    
+    top_left
+    bottom_right
+    bottom_left
+    front_clockwise
+    front_anti_clockwise
+    behind_clockwise
+    behind_anti_clockwise
+
     '''
-    random.shuffle(options)
-    for cmd in options:
-        cube.command(cmd)
-    #cube.command('right_down')
-    #cube.command('left_down')
+    #random.shuffle(options)
+    # for cmd in options[:2]: 
+    #     cube.command(cmd)
+    #     print 'cmd: ', cmd
+    #     print 'rev: ',reverse[cmd]
+    cube.command('top_right')
+    #cube.command('top_left')
     #cube.command('front_clockwise')
 
 
@@ -82,8 +95,6 @@ def evaluation_step_two(cube):
         cube.matriz[6][2] == cube.bottom_color and \
         cube.matriz[5][6] == cube.right_color:
         rate += 1
-    if rate == 4:
-        print 'Step 2 OK!'
     return rate
 
 def evaluation_step_three(cube):
@@ -103,8 +114,6 @@ def evaluation_step_three(cube):
     if cube.matriz[5][7] == cube.right_color and \
         cube.matriz[7][2] == cube.bottom_color:
         rate += 1
-    if rate == 4:
-        print 'Step 3 OK!'
     return rate
 
 def evaluation_step_four(cube):
@@ -120,8 +129,6 @@ def evaluation_step_four(cube):
         rate += 1
     if cube.matriz[5][10] == cube.behind_color and cube.matriz[8][1] == cube.bottom_color:
         rate += 1
-    if rate == 4:
-        print 'Step 4 OK!'
     return rate
 
 def evaluation_step_five(cube):
@@ -145,37 +152,41 @@ def evaluation_step_five(cube):
         cube.matriz[8][2] == cube.bottom_color and \
         cube.matriz[5][8] == cube.right_color:
         rate += 1
-    if rate == 4:
-        print 'Step 5 OK!'
     return rate
 
-def backtraking_step_one(cube, bread_crumb, level = 0, best_rate = 0 ):
+def backtraking(cube, bread_crumb, level = 0, best_rate = 0 ):
     #avalia o estado atual do cubo
     local_rate = evaluation_step_one(cube)
+    local_rate += evaluation_step_two(cube)
+    local_rate += evaluation_step_three(cube)
+    local_rate += evaluation_step_four(cube)
+    local_rate += evaluation_step_five(cube)
+    #print level ,best_rate,local_rate
     #Resultado encontrado
-    if local_rate == 4:
-        print 'Step 1 OK!'
+    if local_rate == 20:
         return True
     #Melhor resultado zera os niveis de atuação
     if local_rate > best_rate:
-        level = 0
+        #level = 0
         best_rate = local_rate
     #incrementa o nivel
     level += 1
     #Verifica se não atingiu o ultimo nivel (sétimo)
-    if level < 5:
+    if level <= 4:
         #randomiza a sequencia de operações
         random.shuffle(options)
         for cmd in options:
             #executa a alteração
             cube.command(cmd)
+            #print 'action: ',cmd
             bread_crumb.append(cmd)
             #chama o backtraking e avalia o resultado
-            if backtraking_step_one(cube,bread_crumb , level, best_rate):#,rate, level, live):
+            if backtraking(cube,bread_crumb , level, best_rate):#,rate, level, live):
                 return True 
             #desfazo a alteração no cubo
             bread_crumb.pop()
             cube.command(reverse[cmd])
+            #print 'action: ',reverse[cmd]
     return False
 
 #def first_nivel():
@@ -185,11 +196,12 @@ shuffle_cube(c)
 print c
 #c.command('right_up')
 bread_crumb = []
-print backtraking_step_one(c,bread_crumb)
+print backtraking(c,bread_crumb)
+print c
 print '{0} Movimentos '.format(len(bread_crumb))
 print bread_crumb
 #print backtraking_step_two(c)
-#print c
+
 
 #print evaluation_step_one(c)
 #print evaluation_step_two(c)
