@@ -8,12 +8,11 @@ Trabalho de complexidade de algoritmos
 Resolver o cubo mágico 
 '''
 options =  ['right_up', 'left_up', \
-            'right_down', 'left_down']
-            # , \
-            # 'top_right', 'top_left', \
-            # 'bottom_right', 'bottom_left', \
-            # 'front_clockwise', 'front_anti_clockwise', \
-            # 'behind_clockwise', 'behind_anti_clockwise' ]
+            'right_down', 'left_down', \
+            'top_right', 'top_left', \
+            'bottom_right', 'bottom_left', \
+            'front_clockwise', 'front_anti_clockwise', \
+            'behind_clockwise', 'behind_anti_clockwise' ]
 
 reverse = {'right_up':'right_down',\
             'right_down':'right_up',\
@@ -38,24 +37,10 @@ def shuffle_cube(cube):
     '''
     Embaralha o cubo tracando as faces
 
-    
-    top_left
-    bottom_right
-    bottom_left
-    front_clockwise
-    front_anti_clockwise
-    behind_clockwise
-    behind_anti_clockwise
-
     '''
-    #random.shuffle(options)
-    # for cmd in options[:2]: 
-    #     cube.command(cmd)
-    #     print 'cmd: ', cmd
-    #     print 'rev: ',reverse[cmd]
-    cube.command('top_right')
-    #cube.command('top_left')
-    #cube.command('front_clockwise')
+    random.shuffle(options)
+    for cmd in options[:6]: 
+        cube.command(cmd)
 
 
 def evaluation_step_one(cube):
@@ -163,8 +148,9 @@ def backtraking(cube, bread_crumb, level = 0, best_rate = 0 ):
     local_rate += evaluation_step_five(cube)
     #print level ,best_rate,local_rate
     #Resultado encontrado
+    #print 'r: ',local_rate
     if local_rate == 20:
-        return True
+        return  (cube, bread_crumb, True)
     #Melhor resultado zera os niveis de atuação
     if local_rate > best_rate:
         #level = 0
@@ -172,22 +158,24 @@ def backtraking(cube, bread_crumb, level = 0, best_rate = 0 ):
     #incrementa o nivel
     level += 1
     #Verifica se não atingiu o ultimo nivel (sétimo)
-    if level <= 4:
+    if level <= 6:
         #randomiza a sequencia de operações
-        random.shuffle(options)
+        #random.shuffle(options)
+        #print options
         for cmd in options:
             #executa a alteração
             cube.command(cmd)
-            #print 'action: ',cmd
+            #print 'level: ',level,'action: ',cmd
             bread_crumb.append(cmd)
             #chama o backtraking e avalia o resultado
-            if backtraking(cube,bread_crumb , level, best_rate):#,rate, level, live):
-                return True 
+            cube, bread_crumb, flag = backtraking(cube, bread_crumb, level, best_rate)
+            if flag:
+                return  (cube, bread_crumb, True)
             #desfazo a alteração no cubo
             bread_crumb.pop()
             cube.command(reverse[cmd])
             #print 'action: ',reverse[cmd]
-    return False
+    return cube, bread_crumb, False
 
 #def first_nivel():
 c = new_cube_clean()  
@@ -196,7 +184,7 @@ shuffle_cube(c)
 print c
 #c.command('right_up')
 bread_crumb = []
-print backtraking(c,bread_crumb)
+backtraking(c,bread_crumb)
 print c
 print '{0} Movimentos '.format(len(bread_crumb))
 print bread_crumb
